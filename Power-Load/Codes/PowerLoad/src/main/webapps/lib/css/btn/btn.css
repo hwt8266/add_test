@@ -1,0 +1,5 @@
+.btn-color,.btn-color:hover, .btn-color:active, .btn-color:focus
+{
+	background-color: #009999;
+	color:white;
+}

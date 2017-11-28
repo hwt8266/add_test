@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>地区行业聚类-VIP用户负荷管理-电力负荷系统</title>
+
+		<link rel="SHORTCUT ICON" href="/PowerLoad/img/favicon.ico"/>
+		<!-- Load Bootstrap CSS -->
+		<link href="../../lib/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+		<!-- Load Customize CSS -->
+		<link href="../../lib/css/customize/customize.css" rel="stylesheet">
+	</head>
+
+	<!-- Body definition -->
+
+	<body class="page-header-fixed page-quick-sidebar-over-content">
+
+		<!-- Top navigator -->
+				<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div id="navbar" class="collapse navbar-collapse" style="margin-right: 8%;">
+      	<ul class="nav navbar-nav navbar-right" style="border-left: solid white 1px;">
+          <li><a class="glyphicon glyphicon-calendar">&nbsp;<span id="date"></span></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li ><a href="/PowerLoad/views/transformer/historicalLoad.html" >变压器负载率管理</a></li>
+          <li class="scactive"><a style="color:#00A6AD" href="#">VIP用户负荷管理</a></li>
+          <li><a href="/PowerLoad/views/backstage/area/arealist.html">后台管理</a></li>
+          <li class="dropdown" style="margin-bottom: -2px;">
+            <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">&nbsp;<span style="font-family: '黑体';">管理员</span><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a onClick="logout()">退出登录</a></li>
+            </ul>
+          </li>
+        </ul>
+        
+      </div>
+    </div>
+  </nav>
+
+		<!-- Container -->
+		<div class="col-md-10 col-lg-offset-1">
+			<div class="col-md-12">
+				<div style="float: left;">
+					<div style=" position:absolute;  margin-top: 6px; color: #000000;">
+						<a href="indusCluster.html" style="color:#009999;" >地区行业聚类</a>　　
+					</div>
+				</div>
+				<a href="indusCluster.html"><img src="../../img/freshicon.jpg" style="float: right; margin-top: -3px;" /></a>
+				<hr  style="margin-left: -0.2%; width: 100.4%; background-color: #9D9D9D;height: 1px;" />
+				<div style="float: left; margin-left: 0px; margin-top:-20px;width: 85px; background: #009999;height: 4px;"></div>
+			</div>
+			<div class="panel-group col-md-12" id="accordion">
+				<div class="panel panel-default" id="tab1">
+					<div class="panel-heading" style="background:#009999;" >
+						<h4 class="panel-title">
+		            		<div style="color: white;"><img style="margin-top:-5px" src="../../img/tabicon1.jpg" /><span style="margin-left: 5px">图表</span><a href="javascript:deletetab('tab1')"><img style=" float:right; margin-right: -10px;" src="../../img/tabicon2.jpg"/></a><a href="javascript:full('contentid')"><img style="float:right;margin-right: 5px;" src="../../img/tabicon3.jpg"/></a><a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><img id="arrow1" style="float:right;margin-right: 5px;" src="../../img/upicon.jpg"/></a> </div>
+		         		</h4>
+					</div>
+					<div id="collapseOne" class="panel-collapse collapse in">
+						<div class="panel-body" id="contentid">
+							<div id="pie-chart1"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+				
+
+		<!-- Load JQuery lib -->
+		<script src="../../controller/base/base.js"></script>
+		<script src="../../lib/js/jquery/jquery-2.2.4.js"></script>
+
+		<!-- Load Bootstrap lib -->
+		<script src="../../lib/js/bootstrap/bootstrap.js"></script>
+
+		<!-- Load ECharts lib -->
+		<script src="../../lib/js/echart/echarts.v2.js"></script>
+
+        <!-- Load Base JS -->
+        <script src="/PowerLoad/controller/base/message.js"></script>
+
+        <!-- Load Common JS -->
+        <script src="/PowerLoad/controller/common/msg-processor.js"></script>
+
+		<!-- Load Customize JS -->
+		<script src="../../controller/base/drawer.js"></script>
+
+		<!-- Load Page Controller JS -->
+		<script src="../../controller/vip/indusCluster/controller.js"></script>
+		
+	</body>
+
+</html>

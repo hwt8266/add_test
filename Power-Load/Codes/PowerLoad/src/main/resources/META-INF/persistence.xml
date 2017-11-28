@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="siemens.ct.pes.powerload" transaction-type="JTA">
+		<jta-data-source>jdbc/smartgrid</jta-data-source>
+		<class>com.siemens.ct.pes.powerload.common.entities.Dept</class>
+		<class>com.siemens.ct.pes.powerload.common.entities.Mease</class>
+		<class>com.siemens.ct.pes.powerload.common.entities.Transformer</class>
+		<class>com.siemens.ct.pes.powerload.common.entities.DisItemPK</class>
+		<class>com.siemens.ct.pes.powerload.common.entities.DisItem</class>
+		<class>com.siemens.ct.pes.powerload.trans.entities.TransIndustryMatrix</class>
+		<class>com.siemens.ct.pes.powerload.trans.entities.TransIndustryParameter</class>
+		<class>com.siemens.ct.pes.powerload.common.entities.VIP</class>
+		<class>com.siemens.ct.pes.powerload.auth.entities.Account</class>
+		<class>com.siemens.ct.pes.powerload.common.entities.IndustryClustered</class>
+		<class>com.siemens.ct.pes.powerload.common.entities.Industry</class>
+	</persistence-unit>
+</persistence>

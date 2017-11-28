@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>母线用电模式</title>
+	
+	<link href="../../lib/css/bootstrap/bootstrap.css" rel="stylesheet">
+	<link href="../../lib/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<link href="../../lib/css/customize/customize.css" rel="stylesheet">
+	
+	<!-- 下方userlist-->
+	<link rel="stylesheet" type="text/css" href="../../lib/css/userlist-bottom.css" /> 
+<!-- BEGIN ZTREE STYLES -->
+	<link rel="stylesheet" type="text/css" href="../../lib/css/ztree/zTreeStyle/zTreeStyle.css"/>
+		
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content">
+	
+	<nav class="navbar navbar-default navbar-fixed-top">
+    	<div class="container-fluid">
+      	<div class="navbar-header" style="background: white; height: 50px;padding: 5px;margin-left: 8%;">
+        <!--<a class="navbar-brand" href="#">-->
+        	<span style="font-family: '微软雅黑'; font-size: 25px; color:#00A6AD"><strong>SIEMENS</strong></span>
+          <!--<img src="../../img/logo2.jpg" class="" alt="Responsive image" style="height:50px">-->
+        <!--</a>-->
+      	</div>
+      	<div id="navbar" class="collapse navbar-collapse" style="margin-right: 8%;">
+      	<ul class="nav navbar-nav navbar-right" style="border-left: solid white 1px;">
+          <li><a class="glyphicon glyphicon-calendar">&nbsp;2016.6.1</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="scactive"><a href="realtimeLoad.html" style="color:#00A6AD">变压器负载率管理</a></li>
+          <li><a href="#">VIP用户负荷管理</a></li>
+          <li class="dropdown" style="margin-bottom: -2px;">
+            <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">&nbsp;<span style="font-family: '黑体';">管理员</span><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">用户设置</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#">退出登录</a></li>
+            </ul>
+          </li>
+        </ul>
+        
+      	</div>
+    	</div>
+  	</nav>
+  	
+  	
+	<!-- Container -->
+	
+	<div class="col-md-2" >
+		<input type="text" style="float:left;width: 120px;margin-right: 10px;height: 25px;">
+		<button type="submit" style="accelerator: 25px;">搜索</button>
+		<ul style="overflow-x: hidden;">
+			<li id="treeDemo" class="ztree" style="width: 240px; overflow: hide; color: #ffffff;margin-left:-37px;margin-top:10px;">
+		</ul>
+	</div>	
+	
+	<div id="container" class="col-md-10">
+
+		<div style="float: left;">
+			
+			<div style=" position:absolute; margin-left: 40px; margin-top: 6px; color: #000000;">
+					<a href="views/VIP/historicalLoad.html" >历史负荷</a>　
+					<a href="views/VIP/powerCharacteristics.html">用电特征</a>　
+					<a href="views/VIP/powerMode.html" style="color:#009999;">用电模式</a>　
+					<a href="views/VIP/powerInfluenceFactors.html">用电影响因素</a>　
+					<a href="views/VIP/loadTrans.html" >负荷同比变化</a>　
+					<a href="views/VIP/loadPredict.html">负载率预测</a>　
+			</div>							
+			<div class="drawerPanel-sc" style="z-index: 10;">
+					<div class="drawerPanel-inner">
+						<div class="drawerContentPanel">						
+							<ul class="page-sidebar-menu" data-keep-expanded="false"
+								data-auto-scroll="true" data-slide-speed="200" style="list-style:none;">
+				
+								<li id="liSearch" style="margin-top:10px;">
+					<!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+									<form class="form-inline margin-bottom-10" >
+									<div class="input-group" style="margin-left: -10px;">
+										<input type="text" value="" id="gmap_geocoding_address"
+											class="form-control"
+											style="color:black; border-top-width: 0px; border-right-width: 0px; border-left-width: 0px;"						
+											placeholder="搜索电站...">
+										<span class="input-group-btn">
+											<button onclick="mysearch();return false" class="btn blue"
+												id="gmap_geocoding_btn" style="background: transparent;">
+											<i class="fa fa-search"><img style="float:right;margin-right: 5px;color:white;" src="../../img/search_icon.png"/></i>
+											</button>
+										</span>
+									</div>
+									</form>
+								</li>
+								
+								<li id="treeDemo" class="ztree"
+									style="width: 240px; overflow: hide; color: #ffffff;margin-left:-37px;margin-top:10px"></li>
+
+								<li id="liForm">
+								<form class="sidebar-search" >
+									<div class="control-group">				
+									<div class="controls" style="font-family: 微软雅黑; font-weight: 900; display:none" id="flipButton">
+							
+										<input type="button" id="prev" title="prevPage" class="prevPage" style="font-weight: bold; display:none;" value="" onclick="prevPage()"/> 
+										<input type="button" id="next" title="nextPage" class="nextPage" style="font-weight: bold;" value="" onclick="nextPage()"/> 
+									</div>
+								</div>
+								</form>
+								</li>
+				<!-- END SIDEBAR MENU -->
+						</ul>
+			
+					</div> 
+					</div>
+			</div>
+			
+		</div>
+		<a href="#"><img src="../../img/freshicon.jpg" style="float: right; margin-top: -3px;" /></a>
+			<!--<a href="#"><img src="../img/freshicon.jpg" style="float: right; margin-top: -3px;margin-right: 5px;" /></a>-->
+		<hr  style="margin-left: 1.5%; width: 102%; background-color: #9D9D9D;height: 1px;" />
+		<div style="float: left; margin-left: 507px; margin-top:-20px;width: 60px; background: #009999;height: 4px;"></div>
+		
+		<!--  用户名称  --> 
+		
+		<div class="panel-group" id="accordion">			 
+			<div id="Item" class="col-md-6">
+				<div class="panel panel-default" >
+					<div class="panel-heading" style="background:#009999; ">
+						<h4 class="panel-title">
+		            		<div style="color: white;" >
+		            			<img style="margin-top:-5px" src="../../img/tabicon1.jpg" />
+		            				<span style="margin-left: 5px">(600010861)蝶岭站500KV母线</span>
+		            			<a href="javascript:deletetab('tab1')">
+		            				<img style=" float:right; margin-right: -10px;" src="../../img/tabicon2.jpg"/>
+		            			</a>
+		            			<a href="javascript:" class="fullscreen">
+		            				<img style="float:right;margin-right: 5px;" src="../../img/tabicon3.jpg"/>
+		            			</a>
+		            			<a data-toggle="collapse" data-parent="#accordion" href="#collapseLine1">
+		            				<img id="arrow1" style="float:right;margin-right: 5px;" src="../../img/upicon.jpg"/>
+								</a> 
+		            		</div>
+		         		</h4>
+					</div>
+					<div id="collapseLine1" class="panel-collapse collapse in">
+					<div class="panel-body">
+						<!-- <div class="col-md-12"> -->
+							<div id="line-chart"></div>							
+						<!-- </div> -->
+					</div>
+					</div>
+			    </div>
+		    </div>
+
+		</div>		
+	</div>
+<!-- userlist -->
+		<div class="page-bar" id="page-bar">
+			<div class="userlist-title">
+				<img src="../../img/selected.png" style="margin-left:10px;margin-top: -3px;"/> <font>已选择电站:</font>	
+				<div class="userlist-tool">
+					<a id="toggleBtn"><img class="fold" id="fold" src="../../img/fold.png" style="width: 16px;height: 16px;" title="收起"/> </a>
+					<a><img id="trash" src="../../img/delete.png" onclick="deleteAllIDs()" style="margin-left:10px;" title="清除全部"/> </a>
+					<a><img id="refreshPage" src="../../img/resume.png" onclick="refreshAllIDs()" style="margin-left:10px;" title="恢复"/> </a>
+					<a><img id="save" src="../../img/save.png" style="margin-left:10px;margin-right:15px;" onclick="saveIDs()" title="保存"/> </a>	
+				</div>
+			</div>
+			<div class="page-bar-userlist" id="page-bar-userlist">
+
+			</div>
+		</div>		
+	
+		<script src="../../lib/js/jquery/jquery-2.2.4.js"></script>
+		
+		<script type="text/javascript" src="../../lib/js/datapicker/moment.js"></script>
+			
+		<script src="../../lib/js/datapicker/daterangepicker-1.3.7.js"></script>
+		
+		<!-- Load Bootstrap lib -->
+		<!-- Load Bootstrap lib -->	
+		<script src="../../lib/js/bootstrap/bootstrap.js"></script>
+		<!-- Load ECharts lib -->
+		<script src="../../lib/js/echart/echarts.min.js"></script>
+		
+		<!-- Load Base JS -->
+		<script src="../../controller/base/base.js"></script>
+		<script src="../../controller/base/drawer.js"></script>
+		<script src="../../controller/base/message.js"></script>
+		
+		<!-- Load Common JS -->
+		<script src="../../controller/common/sidebar_handle.js"></script>
+		<script src="../../controller/common/userlist_bottom.js"></script>
+		<script src="../../controller/common/msg-processor.js"></script>
+		
+		<!-- Load Specific JS -->
+		<script src="../../controller/VIP/powerMode/controller.js"></script>
+		<script src="../../controller/VIP/powerMode/msg-processor.js"></script>
+		<script src="../../controller/VIP/powerMode/chart-option.js"></script>
+		
+		<!-- BEGIN ZTREE SCRIPTS -->
+		<script src="../../lib/js/ztree/jquery.ztree.core-3.5.js"
+			type="text/javascript"></script>
+		<script src="../../lib/js/ztree/jquery.ztree.excheck-3.5.js"
+			type="text/javascript"></script>
+		<script src="../../lib/js/ztree/jquery.ztree.exedit-3.5.js"
+			type="text/javascript"></script>
+		<!-- END ZTREE SCRIPT -->
+	
+</body>
+</html>

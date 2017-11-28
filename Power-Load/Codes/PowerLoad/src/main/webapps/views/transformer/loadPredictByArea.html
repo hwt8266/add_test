@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>区域负载率预测-变压器负载率管理-电力负荷系统</title>
+  <link rel="SHORTCUT ICON" href="/PowerLoad/img/favicon.ico"/>
+  <link href="../../lib/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../lib/css/customize/customize.css" rel="stylesheet">
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div id="navbar" class="collapse navbar-collapse" style="margin-right: 8%;">
+        <ul class="nav navbar-nav navbar-right" style="border-left: solid white 1px;">
+          <li><a class="glyphicon glyphicon-calendar">&nbsp;<span id="date"></span></a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="scactive"><a href="#" style="color:#00A6AD">变压器负载率管理</a></li>
+          <li><a href="/PowerLoad/views/vip/indusCluster.html">VIP用户负荷管理</a></li>
+          <li><a href="/PowerLoad/views/backstage/area/arealist.html">后台管理</a></li>
+          <li class="dropdown" style="margin-bottom: -2px;">
+            <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">&nbsp;<span style="font-family: '黑体';">管理员</span><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a onClick="logout()">退出登录</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Container -->  
+  <div class="col-md-2" >
+    <div class="input-group" style="width:100%;">
+      <input type="text" class="form-control" style="height:25px"; placeholder="区域名称..."; id="searchcontent">
+    </div>
+    <span>&nbsp;&nbsp;</span>
+    <div id="area-menu" class="list-group">
+      <a href="#" class="list-group-item active" style="border-bottom:2px solid #2F4F4F;"><h4>区域列表</h4></a>
+    </div>
+  </div>
+
+  <div id="container" class="col-md-10">
+    <div class="col-md-12">
+      <div style="float: left;">
+        <div style=" position:absolute; margin-top: 6px; color: #000000;">
+          <a href="historicalLoad.html">历史负荷</a>&nbsp;&nbsp;
+          <a href="powerCharacteristics.html">用电特征</a>&nbsp;&nbsp;
+          <a href="powerMode.html">用电模式</a>&nbsp;&nbsp;
+          <a href="powerInfluenceFactors.html">用电影响因素</a>&nbsp;&nbsp;
+          <a href="loadTrans.html">负荷同比变化</a>&nbsp;&nbsp;
+          <a href="loadPredict.html">负载率预测</a>&nbsp;&nbsp;
+          <a href="loadPredictByArea.html" style="color:#009999;">区域负载率预测</a>
+        </div>
+      </div>
+      <hr style="margin-left:-0.2%; margin-top:26px; width:100.4%; background-color:#9D9D9D; height:1px;"/>
+      <div style="float:left; margin-left:530px; margin-top:-20px; width:105px; background:#009999; height:4px;"></div>
+    </div>  
+    
+    <div class="panel-group" id="accordion">
+      <div  class="col-md-12" style="margin-bottom:18px">
+        <!-- Filter -->
+        <div class="panel panel-default">
+          <div class="panel-heading" style="background:#009999;">
+            <h4 class="panel-title">
+              <span class="glyphicon glyphicon-search" style="color:#FFFFFF;"></span>
+              <span style="color:#FFFFFF;">过滤条件</span>
+              <a data-toggle="collapse" href="#div-filter" data-parent="#data-panel">
+                <span id="icon-div-filter" class="glyphicon glyphicon-menu-down" style="color:#FFFFFF; float:right;"></span>
+              </a>
+            </h4>
+          </div>
+          <div id="div-filter" class="panel-collapse collapse">
+            <div class="panel-body" id="contentid">
+            	<div class="col-xs-12 padding0">
+                <div class="col-xs-3" style="padding-left:0px;">
+                  <div class="input-group">
+                    <span class="input-group-addon">变压器: </span>
+                    <input type="text" class="form-control input-xs" aria-describedby="basic-addon1" id="filter-tranname" placeholder="变压器名称">
+                  </div>
+                </div>
+                <div class="col-xs-3" style="padding-left:0px;">
+                  <div class="input-group">
+                    <span class="input-group-addon">类型: </span>
+                    <select id="select-filter-trantype" class="form-control input-xs">
+                      <option value="0">全部</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-3" style="padding-left:0px;">
+                  <div class="input-group">
+                    <span class="input-group-addon">电压: </span>
+                    <select id="select-filter-vlevel" class="form-control input-xs">
+                      <option value="0">全部</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-xs-3" style="padding-left:0px; padding-right:0px;">
+                  <div class="input-group">
+                    <span class="input-group-addon">单位: </span>
+                    <input type="text" class="form-control input-xs" id="filter-deptname" placeholder="所属单位名称">
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12" style="margin-top:10px;">
+                <div class="col-xs-3" style="padding-left:0px;">
+                  <div class="input-group">
+                    <input type="text" class="form-control input-xs" id="filter-mincap" placeholder="最小容量">
+                    <span class="input-group-addon" id="basic-addon1">-</span>
+                    <input type="text" class="form-control input-xs" id="filter-maxcap" placeholder="最大容量 ">
+                  </div>
+                </div>
+                <div class="col-xs-3" style="padding-left:0px;">
+                  <div class="input-group">
+                    <input type="text" class="form-control input-xs" id="filter-minlow" placeholder="轻载最小时间(分钟)">
+                    <span class="input-group-addon" id="basic-addon1">-</span>
+                    <input type="text" class="form-control input-xs" id="filter-maxlow" placeholder="轻载最大时间(分钟)">
+                  </div>
+                </div>
+                <div class="col-xs-3" style="padding-left:0px;">
+                  <div class="input-group">
+                    <input type="text" class="form-control input-xs" id="filter-minhigh" placeholder="重载最小时间(分钟)">
+                    <span class="input-group-addon" id="basic-addon1">-</span>
+                    <input type="text" class="form-control input-xs" id="filter-maxhigh" placeholder="重载最大时间(分钟)">
+                  </div>
+                </div>
+                <div class="col-xs-3" style="padding-left:0px; padding-right:0px;">
+                  <div class="input-group">
+                    <input type="text" class="form-control input-xs" id="filter-minover" placeholder="过载最小时间(分钟)">
+                    <span class="input-group-addon" id="basic-addon1">-</span>
+                    <input type="text" class="form-control input-xs" id="filter-maxover" placeholder="过载最大时间(分钟)">
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 padding0" style="margin-top:10px;">
+                <button class="btn btn-primary btn-sm" style="float:right; margin-left:10px;" onclick="queryTranInAreaList(1)">查询</button>
+                <button type="button" class="btn btn-warning btn-sm" style="float:right; " onclick="clearAllTranInAreaFilter()">清空</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Transformers list table -->
+        <div id="div-tranlist-border" class="panel panel-default" style="margin-top:10px;">
+          <div class="panel-heading" style="background:#009999;">
+            <h4 class="panel-title">
+              <span class="glyphicon glyphicon-list" style="color:#FFFFFF;"></span>
+              <span style="color:#FFFFFF;">变压器列表</span>
+              <a data-toggle="collapse" href="#div-tranlist" data-parent="#div-tranlist-border">
+                <span id="icon-div-tranlist-collapse" class="glyphicon glyphicon-menu-up" style="color:#FFFFFF; float:right;"></span>
+              </a>
+            </h4>
+          </div>
+          <div id="div-tranlist" class="panel-collapse collapse in">
+            <div class="panel-body">
+            	<div class="col-xs-12 table-responsive">
+                <table id="tran-table" class="table table-hover">
+                  <tr class="active">
+                    <th>变压器名称</th>
+                    <th>变压器类型</th>
+                    <th>电压等级</th>
+                    <th>容量</th>
+                    <th>增长率参数</th>
+                    <th>轻载时间</th>
+                    <th>重载时间</th>
+                    <th>过载时间</th>
+                    <th>所属单位</th>
+                    <th>&nbsp;</th>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-xs-12">
+                <ul id="pagination-tran" class="pagination" style="margin:0px;"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Load forecast chart -->
+        <div id="div-chart-border" class="col-xs-12" style="margin-top:10px; padding:0px;">
+          <div class="panel panel-default" >
+            <div class="panel-heading" style="background:#009999; ">
+              <h4 id="h-chart" class="panel-title" style="color: white;">
+                <span class="glyphicon glyphicon-stats" style="color:#FFFFFF;"></span>
+                <span id="title-linechart" style="color:#FFFFFF;">选择变压器查看负载率预测曲线</span>
+              </h4>
+            </div> 
+            <div id="div-chart" class="panel-collapse collapse">
+              <div class="panel-body" id="content-linechart">
+                <div id="line-chart" class="col-xs-12" style="height:320px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+  </div>
+  
+  <!-- Modify transformer's increasement parameter (Modal) -->
+  <div class="modal fade" id="modal-tran-increase" tabindex="-1" role="dialog" aria-labelledby="title-areabasic" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="title-tran-increase"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="input-tran-increase">增长率参数</label>
+            <input id="input-tran-increase" type="text" class="form-control" placeholder="请输入变压器增长率"/>
+          </div>
+          <div class="form-group">
+            <label id="operresult-tranmodal"></label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-Danger" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="submitTranParam()">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- JQuery lib -->
+  <script src="../../lib/js/jquery/jquery-2.2.4.js"></script>
+  
+  <!-- 时间跨度插件 js-->
+  <script src="../../lib/js/bootstrap/bootstrap.js"></script>
+  
+  <!-- Load ECharts lib -->
+  <script src="../../lib/js/echart/echarts.min.js"></script>
+  
+  <!-- Load 下拉插件 -->
+  <script src="../../lib/js/select/bootstrap-select.min.js"></script>
+  
+  <!-- Load Base JS -->
+  <script src="../../controller/base/base.js"></script>
+  <script src="../../controller/base/message.js"></script>
+  <script src="../../lib/js/datapicker/moment.js"></script>
+  
+  <!-- Load Common JS -->
+  <script src="../../controller/common/msg-processor.js"></script>
+  
+  <!-- Load Specific JS -->
+  <script src="../../controller/transformer/areaLoadPredict/controller.js"></script>
+  <script src="../../controller/transformer/areaLoadPredict/msg-processor.js"></script>
+  <script src="../../controller/transformer/areaLoadPredict/chart-option.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>负荷同比变化-变压器负载率管理-电力负荷系统</title>
+
+    <link rel="SHORTCUT ICON" href="/PowerLoad/img/favicon.ico"/>
+    <!-- <link href="../../lib/css/bootstrap/bootstrap.css" rel="stylesheet"> -->
+    <link href="../../lib/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../lib/css/customize/customize.css" rel="stylesheet">
+    
+    <!-- 时间插件 -->
+    <link href="../../lib/css/customize/daterangepicker-bs3.css" rel="stylesheet">
+    
+    <link href="../../lib/css/btn/btn.css" rel="stylesheet">
+    <!-- 下方userlist -->
+    <link rel="stylesheet" type="text/css" href="../../lib/css/userlist-bottom.css" /> 
+  
+    <!-- BEGIN ZTREE STYLES -->
+    <link rel="stylesheet" type="text/css" href="../../lib/css/ztree/zTreeStyle/zTreeStyle.css"/>
+  </head>
+
+  <!-- Body definition -->
+  <body class="page-header-fixed page-quick-sidebar-over-content">
+    <!-- Top navigator -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div id="navbar" class="collapse navbar-collapse" style="margin-right: 8%;">
+          <ul class="nav navbar-nav navbar-right" style="border-left: solid white 1px;">
+            <li><a class="glyphicon glyphicon-calendar">&nbsp;<span id="date"></span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="scactive"><a href="#" style="color:#00A6AD">变压器负载率管理</a></li>
+            <li><a href="/PowerLoad/views/vip/indusCluster.html">VIP用户负荷管理</a></li>
+            <li><a href="/PowerLoad/views/backstage/area/arealist.html">后台管理</a></li>
+            <li class="dropdown" style="margin-bottom: -2px;">
+              <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">&nbsp;<span style="font-family: '黑体';">管理员</span><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a onClick="logout()">退出登录</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Container -->  
+    <div class="col-md-2" >
+      <div class="input-group" style="width:100%">
+        <input type="text" class="form-control" style="height:25px" placeholder="搜索..." id="searchcontent">
+      </div>
+      <ul style="overflow-x: hidden;">
+        <li id="treeDemo" class="ztree" style="width: 240px; overflow: hide; color: #ffffff;margin-left:-37px;margin-top:10px;">
+      </ul>
+    </div>
+    
+    <div class="col-md-10">
+      <div class="col-md-12">
+        <div style="float: left;">
+          <div style=" position:absolute;  margin-top: 6px; color: #000000;">
+            <a href="historicalLoad.html">历史负荷</a>&nbsp;&nbsp;
+            <a href="powerCharacteristics.html">用电特征</a>&nbsp;&nbsp;
+            <a href="powerMode.html">用电模式</a>&nbsp;&nbsp;
+            <a href="powerInfluenceFactors.html">用电影响因素</a>&nbsp;&nbsp;
+            <a href="loadTrans.html" style="color:#009999;">负荷同比变化</a>&nbsp;&nbsp;
+            <a href="loadPredict.html">负载率预测</a>&nbsp;&nbsp;
+          <a href="loadPredictByArea.html">区域负载率预测</a>
+          </div>
+        </div>
+        <a href="javascript:fresh()"><img src="../../img/freshicon.jpg" style="float: right; margin-top:-3px;"/></a>
+        <hr style="margin-left:-0.2%; margin-top:26px; width:100.4%; background-color:#9D9D9D; height:1px;" />
+        <div style="float:left; margin-left:336px; margin-top:-20px; width:85px; background:#009999; height:4px;"></div>
+      </div>
+      <div class="panel-group" id="accordion">
+        <div class="col-md-6" id="tabid" style="margin-bottom:20px">
+          <div class="panel panel-default" >
+            <div class="panel-heading" style="background:#009999;">
+              <h4 class="panel-title">
+                <div style="color: white;"><img style="margin-top:-5px" src="../../img/tabicon1.jpg" />
+                  <span style="margin-left: 5px">加载中...</span>
+                  <a href="javascript:deletetab('tabid')"><img style=" float:right; margin-right: -10px;" src="../../img/tabicon2.jpg"/></a>
+                  <a href="javascript:full('contentid')"><img style="float:right;margin-right: 5px;" src="../../img/tabicon3.jpg"/></a>
+                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseid"><img id="arrowid" style="float:right;margin-right: 5px;" src="../../img/upicon.jpg"/></a> 
+                </div>
+              </h4>
+            </div>
+            <div id="collapseid" class="panel-collapse collapse in">
+              <div class="panel-body" id="contentid">
+                <div class="col-md-12">
+                  <div class="col-md-10">
+                    <div id="line-chart"></div>
+                  </div>
+                  <div class="col-md-2">
+                    <div id="histogram-chart" ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page-bar" id="page-bar">
+      <div class="userlist-title">
+        <img src="../../img/selected.png" style="margin-left:10px;margin-top: -3px;"/> <font>已选择:</font>  
+        <div class="userlist-tool">
+          <a id="toggleBtn"><img class="fold" id="fold" src="../../img/fold.png" style="width: 16px;height: 16px;" title="收起"/> </a>
+          <a><img id="trash" src="../../img/delete.png" onclick="deleteAllIDs()" style="margin-left:10px;" title="清除全部"/> </a>
+          <a><img id="refreshPage" src="../../img/resume.png" onclick="refreshAllIDs()" style="margin-left:10px;" title="恢复"/> </a>
+          <a><img id="save" src="../../img/save.png" style="margin-left:10px;margin-right:15px;" onclick="saveIDs()" title="保存"/> </a>  
+        </div>
+      </div>
+      <div class="page-bar-userlist" id="page-bar-userlist">
+      
+      </div>
+    </div>    
+    
+    <!-- JQuery lib -->
+    <script src="../../lib/js/jquery/jquery-2.2.4.js"></script>
+  
+    <!-- Data pick lib -->
+    <script type="text/javascript" src="../../lib/js/datapicker/moment.js"></script>      
+    <script src="../../lib/js/datapicker/daterangepicker-1.3.7.js"></script>
+    
+    <!-- Load Bootstrap lib --> 
+    <script src="../../lib/js/bootstrap/bootstrap.js"></script>
+    
+    <!-- Load ECharts lib -->
+    <script src="../../lib/js/echart/echarts.min.js"></script>
+    
+    <!-- Load Base JS -->
+    <script src="../../controller/base/base.js"></script>
+    <script src="../../controller/base/drawer.js"></script>
+    <script src="../../controller/base/message.js"></script>
+    
+    <!-- Load Common JS -->
+    <script src="../../controller/common/sidebar_handle.js"></script>
+    <script src="../../controller/common/userlist_bottom.js"></script>
+    <script src="../../controller/common/msg-processor.js"></script>
+    
+    <!-- Load Specific JS -->
+    <script src="../../controller/transformer/loadTrans/controller.js"></script>
+    <script src="../../controller/transformer/loadTrans/msg-processor.js"></script>
+    <script src="../../controller/transformer/loadTrans/chart-option.js"></script>
+    
+    <!-- BEGIN ZTREE SCRIPTS -->
+    <script src="../../lib/js/ztree/jquery.ztree.core-3.5.js"></script>
+    <script src="../../lib/js/ztree/jquery.ztree.excheck-3.5.js"></script>
+    <script src="../../lib/js/ztree/jquery.ztree.exedit-3.5.js"></script>
+  </body>
+</html>
